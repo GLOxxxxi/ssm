@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suncaper.demo.mapper.ApplicationMapper">
+    <resultMap id="MyBaseResultMap" type="com.suncaper.demo.entity.Application">
+        <result column="college_name" jdbcType="VARCHAR" property="collegeName" />
+    </resultMap>
+    <select resultType="com.suncaper.demo.entity.vo.StatisticsVO" id="statistics" parameterType="String">
+            SELECT COUNT(*) AS `allCount`,
+                SUM(IF(`status` = 'TG',1,0)) AS `passCount` ,
+                SUM(IF(`status` = 'BTG',1,0)) AS `noPassCount` ,
+                SUM(IF(`status` = 'DSH',1,0)) AS `waitCount`
+            FROM wcss_application
+        <if test="_parameter!= null">
+            where college_name=#{collegeName}
+        </if>
+    </select>
+    <select resultType="com.suncaper.demo.entity.vo.StatisticsVO" id="statisticsAll" parameterType="String">
+            SELECT COUNT(*) AS `allCount`,
+                SUM(IF(`status` = 'TG',1,0)) AS `passCount` ,
+                SUM(IF(`status` = 'BTG',1,0)) AS `noPassCount` ,
+                SUM(IF(`status` = 'DSH',1,0)) AS `waitCount`
+            FROM wcss_application
+    </select>
+    <select id="selectCollegeName" resultMap="MyBaseResultMap">
+            select * FROM wcss_application GROUP BY college_name
+    </select>
+</mapper>

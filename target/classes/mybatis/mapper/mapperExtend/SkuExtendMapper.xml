@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suncaper.demo.mapper.SkuMapper">
+<insert id="batchInsert" parameterType="java.util.ArrayList">
+    insert  into wcss_sku(product_id, `name`)values
+    <foreach collection="skus" item="sku" separator=",">
+        (#{sku.productId},#{sku.name})
+    </foreach>
+</insert>
+    <select id="selectIdByName" resultType="java.lang.Long" parameterType="com.suncaper.demo.entity.Sku">
+        select id from wcss_sku where product_id= #{productId} and name = #{skuName }
+    </select>
+</mapper>

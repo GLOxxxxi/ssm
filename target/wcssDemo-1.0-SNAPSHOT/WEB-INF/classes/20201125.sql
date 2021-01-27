@@ -1,0 +1,1 @@
+ALTER TABLE wcss_audit_history MODIFY is_deleted TINYINT(1) DEFAULT 0

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suncaper.demo.mapper.AuditHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.suncaper.demo.entity.AuditHistory">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="application_id" jdbcType="BIGINT" property="applicationId" />
+    <result column="audit_by" jdbcType="VARCHAR" property="auditBy" />
+    <result column="auditor_name" jdbcType="VARCHAR" property="auditorName" />
+    <result column="audit_comment" jdbcType="VARCHAR" property="auditComment" />
+    <result column="audit_node_code" jdbcType="INTEGER" property="auditNodeCode" />
+    <result column="audit_node_name" jdbcType="VARCHAR" property="auditNodeName" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="gmt_created" jdbcType="TIMESTAMP" property="gmtCreated" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, application_id, audit_by, auditor_name, audit_comment, audit_node_code, audit_node_name, 
+    is_deleted, STATUS, gmt_created, gmt_modified
+  </sql>
+  <select id="selectByExample" parameterType="com.suncaper.demo.entity.AuditHistoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from wcss_audit_history
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wcss_audit_history
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from wcss_audit_history
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.suncaper.demo.entity.AuditHistoryExample">
+    delete from wcss_audit_history
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.suncaper.demo.entity.AuditHistory">
+    insert into wcss_audit_history (id, application_id, audit_by, 
+      auditor_name, audit_comment, audit_node_code, 
+      audit_node_name, is_deleted, STATUS, 
+      gmt_created, gmt_modified)
+    values (#{id,jdbcType=BIGINT}, #{applicationId,jdbcType=BIGINT}, #{auditBy,jdbcType=VARCHAR}, 
+      #{auditorName,jdbcType=VARCHAR}, #{auditComment,jdbcType=VARCHAR}, #{auditNodeCode,jdbcType=INTEGER}, 
+      #{auditNodeName,jdbcType=VARCHAR}, #{isDeleted,jdbcType=BIT}, #{status,jdbcType=VARCHAR}, 
+      #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.suncaper.demo.entity.AuditHistory">
+    insert into wcss_audit_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="applicationId != null">
+        application_id,
+      </if>
+      <if test="auditBy != null">
+        audit_by,
+      </if>
+      <if test="auditorName != null">
+        auditor_name,
+      </if>
+      <if test="auditComment != null">
+        audit_comment,
+      </if>
+      <if test="auditNodeCode != null">
+        audit_node_code,
+      </if>
+      <if test="auditNodeName != null">
+        audit_node_name,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="gmtCreated != null">
+        gmt_created,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="applicationId != null">
+        #{applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="auditBy != null">
+        #{auditBy,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null">
+        #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditComment != null">
+        #{auditComment,jdbcType=VARCHAR},
+      </if>
+      <if test="auditNodeCode != null">
+        #{auditNodeCode,jdbcType=INTEGER},
+      </if>
+      <if test="auditNodeName != null">
+        #{auditNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreated != null">
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.suncaper.demo.entity.AuditHistoryExample" resultType="java.lang.Long">
+    select count(*) from wcss_audit_history
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update wcss_audit_history
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.applicationId != null">
+        application_id = #{record.applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.auditBy != null">
+        audit_by = #{record.auditBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditorName != null">
+        auditor_name = #{record.auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditComment != null">
+        audit_comment = #{record.auditComment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditNodeCode != null">
+        audit_node_code = #{record.auditNodeCode,jdbcType=INTEGER},
+      </if>
+      <if test="record.auditNodeName != null">
+        audit_node_name = #{record.auditNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=BIT},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gmtCreated != null">
+        gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModified != null">
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update wcss_audit_history
+    set id = #{record.id,jdbcType=BIGINT},
+      application_id = #{record.applicationId,jdbcType=BIGINT},
+      audit_by = #{record.auditBy,jdbcType=VARCHAR},
+      auditor_name = #{record.auditorName,jdbcType=VARCHAR},
+      audit_comment = #{record.auditComment,jdbcType=VARCHAR},
+      audit_node_code = #{record.auditNodeCode,jdbcType=INTEGER},
+      audit_node_name = #{record.auditNodeName,jdbcType=VARCHAR},
+      is_deleted = #{record.isDeleted,jdbcType=BIT},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
+      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.suncaper.demo.entity.AuditHistory">
+    update wcss_audit_history
+    <set>
+      <if test="applicationId != null">
+        application_id = #{applicationId,jdbcType=BIGINT},
+      </if>
+      <if test="auditBy != null">
+        audit_by = #{auditBy,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null">
+        auditor_name = #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditComment != null">
+        audit_comment = #{auditComment,jdbcType=VARCHAR},
+      </if>
+      <if test="auditNodeCode != null">
+        audit_node_code = #{auditNodeCode,jdbcType=INTEGER},
+      </if>
+      <if test="auditNodeName != null">
+        audit_node_name = #{auditNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreated != null">
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.suncaper.demo.entity.AuditHistory">
+    update wcss_audit_history
+    set application_id = #{applicationId,jdbcType=BIGINT},
+      audit_by = #{auditBy,jdbcType=VARCHAR},
+      auditor_name = #{auditorName,jdbcType=VARCHAR},
+      audit_comment = #{auditComment,jdbcType=VARCHAR},
+      audit_node_code = #{auditNodeCode,jdbcType=INTEGER},
+      audit_node_name = #{auditNodeName,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      STATUS = #{status,jdbcType=VARCHAR},
+      gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

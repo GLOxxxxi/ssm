@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suncaper.demo.mapper.GradeMapper">
+    <resultMap id="MyBaseResultMap" type="com.suncaper.demo.entity.Grade">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="batch_id" jdbcType="BIGINT" property="batchId" />
+        <result column="grade_name" jdbcType="VARCHAR" property="gradeName" />
+        <result column="batch_name" jdbcType="VARCHAR" property="batchName" />
+    </resultMap>
+    <insert id="insertGrade" parameterType="java.util.ArrayList">
+        insert  into wcss_batch_grade(batch_id,grade_name,batch_name)values
+        <foreach collection="grades" item="grades" separator=",">
+            (#{grades.batchId},#{grades.gradeName},#{grades.batchName})
+        </foreach>
+    </insert>
+    <select id="selectById" parameterType="java.lang.Long" resultMap="MyBaseResultMap">
+        select * from  wcss_batch_grade where batch_id=#{batchId }
+    </select>
+    <select id="selectByBatchId" parameterType="java.lang.Long" resultMap="MyBaseResultMap">
+        select grade_name from wcss_batch_grade where batch_id = #{batchId }
+    </select>
+</mapper>
